@@ -16,6 +16,27 @@ namespace lineChart
         // Draws the pie chart and the legend
         private void BtnDraw_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Parse values and labels from text boxes
+                var values = txtValues.Text.Split(',')
+                                           .Select(x => float.Parse(x.Trim()))
+                                           .ToList();
+
+                var labels = txtFruits.Text.Split(',')
+                                           .Select(x => x.Trim())
+                                           .ToList();
+
+                if (values.Count != labels.Count)
+                {
+                    MessageBox.Show(
+                        "Please make sure the number of labels matches the number of values.",
+                        "Input Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+            }
             // Calculate total for percentages
             float total = values.Sum();
             float startAngle = 0; // Starting angle for the first slice
