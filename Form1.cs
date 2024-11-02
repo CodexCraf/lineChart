@@ -12,7 +12,7 @@ namespace lineChart
             InitializeComponent();
         }
 
-        #  Daniel
+        //  Daniel
         // Draws the pie chart and the legend
         private void BtnDraw_Click(object sender, EventArgs e)
         {
@@ -46,7 +46,7 @@ namespace lineChart
                 }
             }
         }
-         # Gary
+         // Gary
         // Method to add a legend label with a color box for each slice
         private void AddLegendLabel(string label, Color color, int index)
         {
