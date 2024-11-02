@@ -35,39 +35,49 @@ namespace lineChart
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error
                     );
+                    return;
+                }
+                // Calculate total for percentages
+                float total = values.Sum();
+                float startAngle = 0; // Starting angle for the first slice
+                Random rand = new Random(); // For generating random colors
+
+                // Clear previous drawings
+                using (Graphics g = chartPanel.CreateGraphics())
+                {
+                    g.Clear(chartPanel.BackColor);
+                    legendPanel.Controls.Clear(); // Clear legend panel
+
+                    // Loop through values to draw each pie slice
+                    for (int i = 0; i < values.Count; i++)
+                    {
+                        // Calculate angle for each slice
+                        float sweepAngle = (values[i] / total) * 360f;
+
+                        // Generate random color for each slice
+                        Color color = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
+                        Brush brush = new SolidBrush(color);
+
+                        // Draw the pie slice
+                        g.FillPie(brush, 10, 10, 300, 300, startAngle, sweepAngle);
+                        startAngle += sweepAngle;
+
+                        // Add legend label with color box
+                        AddLegendLabel(labels[i], color, i);
+                    }
                 }
             }
-            // Calculate total for percentages
-            float total = values.Sum();
-            float startAngle = 0; // Starting angle for the first slice
-            Random rand = new Random(); // For generating random colors
-
-            // Clear previous drawings
-            using (Graphics g = chartPanel.CreateGraphics())
+            catch (FormatException ex)
             {
-               g.Clear(chartPanel.BackColor);
-               legendPanel.Controls.Clear(); // Clear legend panel
-
-               // Loop through values to draw each pie slice
-               for (int i = 0; i < values.Count; i++)
-               {
-                  // Calculate angle for each slice
-                  float sweepAngle = (values[i] / total) * 360f;
-
-                  // Generate random color for each slice
-                  Color color = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
-                  Brush brush = new SolidBrush(color);
-
-                  // Draw the pie slice
-                  g.FillPie(brush, 10, 10, 300, 300, startAngle, sweepAngle);
-                  startAngle += sweepAngle;
-
-                  // Add legend label with color box
-                  AddLegendLabel(labels[i], color, i);
-                }
+                MessageBox.Show(
+                    "Please make sure the number of labels matches the number of values.",
+                    "Input Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
-         // Gary
+        // Gary
         // Method to add a legend label with a color box for each slice
         private void AddLegendLabel(string label, Color color, int index)
         {
