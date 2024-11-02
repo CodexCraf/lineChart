@@ -12,7 +12,7 @@ namespace lineChart
             InitializeComponent();
         }
 
-        //  Daniel
+        //  Daniel and lovely
         // Draws the pie chart and the legend
         private void BtnDraw_Click(object sender, EventArgs e)
         {
